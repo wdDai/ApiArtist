@@ -40,7 +40,7 @@ CREATE TABLE `DBSettings` (
 
 LOCK TABLES `DBSettings` WRITE;
 /*!40000 ALTER TABLE `DBSettings` DISABLE KEYS */;
-INSERT INTO `DBSettings` VALUES (1,'localhost','3306','Tui','root','123456',NULL),(2,'localhost','3306','ApiArtistSample','root','123456',NULL),(3,'13.55.117.177','3306','Tui','root','123456',NULL),(4,'localhost','3306','TuiTestData','root','123456',NULL);
+INSERT INTO `DBSettings` VALUES (1,'localhost','3306','Tui','root','123456',NULL),(2,'localhost','3306','ApiArtistSample','root','123456',NULL),(3,'xx.xx.xxx.xxx','3306','Tui','root','123456',NULL),(4,'localhost','3306','TuiTestData','root','123456',NULL);
 /*!40000 ALTER TABLE `DBSettings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-15  0:45:08
+-- Dump completed on 2020-06-20 20:34:59

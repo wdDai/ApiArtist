@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ExampleApiTest extends TestBase {
 
-    @BeforeGroups(groups = {"request logging in"})
+    @BeforeGroups(groups = {"requests logging in"})
     private void login(){
         utils.login();
     }
@@ -22,7 +22,7 @@ public class ExampleApiTest extends TestBase {
         return AAUtils.readDB(env.testDB, sql).toArray();
     }
 
-    @Test(dataProvider = "Test Cases", groups = "request logging in")
+    @Test(dataProvider = "Test Cases", groups = "requests logging in")
     public void testJobSeeker(Map<String, String> testCase) throws ParseException {
         ApiTest test = new ApiTest(env, testCase, token);
 
