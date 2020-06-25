@@ -1,34 +1,43 @@
 # Read Me
 ApiArtist is an API automation framework that simplifies the process of writing tests. 
-It provides easy way of writing and maintaining test case and data in database.
+It provides easy ways of writing and maintaining test cases in database.
 
 ---
 ## Data model
 All table and column names are recommended to be the same as shown in the following. 
-Or you need to modify the corresponding SQL statements in the Environment and ApiArtist classes if 
+Otherwise you'll need to modify the corresponding SQL statements in the Environment and ApiArtist classes if 
 you prefer other names.
 
-####Environment settings
+#### Environment settings
 Environment settings are defined by two tables - 'EnvironmentSettings' and 'DBSettings'.
 They are recommended to be stored with 'TestCases' where test data is, but this is not mandatory.
 - EnvironmentSetting:
-![imgEnvironmentSettings](img/EnvironmentSettings.jpg)
+  ![imgEnvironmentSettings](img/EnvironmentSettings.jpg)
 - DBSettings:
-![imgDBSettings](img/DBSettings.jpg)
+  ![imgDBSettings](img/DBSettings.jpg)
 
-####Test cases
+#### Test cases
 Each test case is defined by one row of in the test cases table. There can be multiple tables that
  stores test cases. Table names can be specified in SQL statements test code.
-![imgTestCases](img/TestCases.jpg)
-- 'param' - input parameters of an API request. It needs to be written in a json format. 'param' can
+  ![imgTestCases](img/TestCases.jpg)
+
+##### Test cases fields
+- id - A string to identify a test case.
+- httpMethod - Not case sensitive.
+- path - Combined with the 'api_base_url' in the 'EnvironmentSettings' table, 
+the full url of an API will be 'api_base_url + path'.
+- param - input parameters of an API request. It needs to be written in a json format. 'param' can
 be left as 'null' if there is no parameter needed.
+
     ```
     {
       "key1":"value1",
       "key2":"value2"
     }
     ```
-- 'jsonBody' - Input body of an API request.
+
+- expectedCode - code that will be automatically compared with responded code in test execution.
+- jsonBody - Input body of an API request.
 - v_type - Verification type, which specifies the way of asserting API response.
 - v_value - Verification value that specifies the expected value of verification.
 #### Verification type & Verification value examples
@@ -36,11 +45,11 @@ be left as 'null' if there is no parameter needed.
 
     | v_type  |  v_value | 
     |---|---|
-    | text | this email address is already taken |
+    | text | this email address has been registered |
 
 - When you need to assert that the responded json body contains the same value as 
-in the API request json body, specify 'v_type' as 'json' and write the json paths of each value in 'v_value'.
-For example, request json body is
+ the API request json body, specify 'v_type' as 'json' and write the json paths of each value in 'v_value'.
+For example, when request json body is
 
     ```
     {
@@ -51,7 +60,7 @@ For example, request json body is
     }
     ```
   
-    You also know responded json body is supposed to be structured as
+    You also know the responded json body is structured as
 
     ```
     {
@@ -63,7 +72,6 @@ For example, request json body is
     | v_type | v_value |
     |---|---|
     |json| {"respPath": "$.newUsername", "inputPath": "$.user.username"}|
-    
 
 ---
 
@@ -85,10 +93,10 @@ For example, request json body is
         protected static Environment env;
         env = new Environment(entr, "EnvironmentSetting_id", "local test data, remote backend");
         ```
-        In the above example, note parameter "local test data, remote backend" can be omitted.
+        In the above example, parameter "local test data, remote backend" can be omitted.
 
-- #### Write test
-    1. User DataProvider to retrieve test data from database.
+- #### Write tests
+    1. Use DataProvider to retrieve test data from database.
         ```
            @DataProvider(name = "Test Cases")
            private Object[] getTestCases() throws SQLException {
@@ -118,7 +126,13 @@ For example, request json body is
                assertThat(ApiArtist.execute(test).executionStatus, is(ExecutionStatus.Passed));
            }
        ``` 
+       
+---
 ### Built with
 - REST Assured
 - TestNG
 - JDBC
+
+### Authors
+- Alex Dai
+- Jay He
